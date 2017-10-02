@@ -1,0 +1,46 @@
+using System;
+
+namespace OnlineJudge
+{
+    public static class Intervals
+    {
+        static int sizeArray = int.Parse(Console.ReadLine());
+        static int[] arraySensorReading = new int[sizeArray];
+        static int[] masPrex = new int[sizeArray];
+        public static void Pref()
+        {
+            masPrex[0] = arraySensorReading[0];
+            for (int i = 1; i < sizeArray; i++)
+                masPrex[i] = masPrex[i - 1] + arraySensorReading[i];
+        }
+
+        public static int Query(int l, int r)
+        {
+            if (l > 0)
+            {
+                return masPrex[r] - masPrex[l - 1];
+            }
+            else
+            {
+                return masPrex[r];
+            }
+        }
+        static void Main()
+        { 
+            for (int i = 0; i < arraySensorReading.Length; i++)
+                arraySensorReading[i] = int.Parse(Console.ReadLine());
+            var sizeArrayPair = int.Parse(Console.ReadLine());
+            var arrayPair = new string[sizeArrayPair];
+            var arrayResult = new int[sizeArrayPair];
+            for (int i = 0; i < arrayPair.Length; i++)
+                arrayPair[i] = Console.ReadLine();
+            Pref();
+            for (int i = 0; i < arrayPair.Length; i++)
+            {
+                var splitPair = arrayPair[i].Split(' ');
+                Console.WriteLine(Query(int.Parse(splitPair[0]) - 1, int.Parse(splitPair[1]) - 1));
+            }
+     
+        }
+    }
+}
